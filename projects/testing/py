@@ -1,0 +1,46 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+
+# Configure Chrome options to ignore SSL certificate errors
+chrome_options = Options()
+chrome_options.add_argument("--ignore-certificate-errors")
+
+# Initialize the Chrome WebDriver with the configured options
+driver = webdriver.Chrome(options=chrome_options)
+
+# Maximize the browser window
+driver.maximize_window()
+
+# Navigate to the URL
+driver.get("http://54.162.69.158:8080")
+
+# Wait for the element to be present
+try:
+    username = driver.find_element(by=By.NAME, value='j_username')
+    password = driver.find_element(by=By.NAME, value='j_password')
+    username.send_keys('Amal')
+    password.send_keys('devops')
+    submit_button = driver.find_element(by=By.NAME, value='Submit')
+    submit_button.click()
+    # #time.sleep(4)
+    # # Replace 'Amal' with the actual name attribute of the element
+    # username = WebDriverWait(driver, 10).until(
+    #     EC.presence_of_element_located((By.NAME, "Amal"))
+    # )
+    # # Interact with the element
+    # username.send_keys("your_username")
+    
+    # # Print the WebDriver object to verify it's working
+    # print(driver)
+
+except Exception as e:
+    print(f"An error occurred: {e}")
+
+finally:
+    # Close the browser after a short delay to see the result
+    time.sleep(10)
+    driver.quit()
